@@ -7,7 +7,7 @@ const {
   toggleCompleteOfTodo,
 } = require("../controllers/todos");
 
-router.get("/todos", getTodosList);
+router.get("/todos/:isComplete", getTodosList);
 router.post("/todos", addATodo);
 router.delete("/todos/:todoId", removeATodo);
 router.put("/todos/:todoId", toggleCompleteOfTodo);

@@ -17,7 +17,7 @@ const addATodo = async (req, res) => {
 
 const getTodosList = async (req, res) => {
   try {
-    const todosList = await getTodos();
+    const todosList = await getTodos(req.params.isComplete);
     return res.status(200).json(todosList).end();
   } catch (err) {
     return res.status(500).json(err.message).end();

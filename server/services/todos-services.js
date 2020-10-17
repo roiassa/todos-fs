@@ -5,8 +5,8 @@ function addTodo(todo) {
   return todo.save();
 }
 
-function getTodos() {
-  return Todo.find({});
+function getTodos(isComplete) {
+  return Todo.find({ isComplete: isComplete });
 }
 
 function removeTodo(todoId) {
