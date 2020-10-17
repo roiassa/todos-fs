@@ -1,0 +1,1 @@
+npx sass client/src/styles/scss/main.scss client/src/styles/dist/App.css --watch
