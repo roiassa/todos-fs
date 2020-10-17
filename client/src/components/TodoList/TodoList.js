@@ -1,54 +1,86 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { getTodos } from "../../helpers/todos-api";
+import { customStyles } from "../../helpers/customStyles";
+import { makeStyles } from "@material-ui/core/styles";
 import TodoItem from "../TodoItem/TodoItem";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const TodoList = () => {
   const [todoList, setTodoList] = useState([]);
   const [isComplete, setIsComplete] = useState(false);
+  const [localLoading, setLocalLoading] = useState(true);
+
+  const history = useHistory();
 
   useEffect(() => {
-    getTodos(isComplete, setTodoList);
+    setLocalLoading(true);
+    getTodos(isComplete, setTodoList).then(() => setLocalLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isComplete]);
 
-  console.log(todoList);
+  const classes = makeStyles(customStyles)();
 
   return (
-    <div className="todo-list">
-      <div className="top-btns">
-        <ButtonGroup
-          variant="contained"
-          color="primary"
-          aria-label="contained primary button group"
-          fullWidth
-        >
-          <Button onClick={() => isComplete && setIsComplete(false)}>
+    <>
+      <div className="todo-list-container">
+        <div className="top-btns">
+          <Button
+            onClick={() => isComplete && setIsComplete(false)}
+            className={
+              !isComplete ? classes.selectedButtons : classes.topButtonsBG
+            }
+          >
             Todos
           </Button>
-          <Button onClick={() => !isComplete && setIsComplete(true)}>
+          <Button
+            onClick={() => !isComplete && setIsComplete(true)}
+            className={
+              isComplete ? classes.selectedButtons : classes.topButtonsBG
+            }
+          >
             Completed
           </Button>
-        </ButtonGroup>
+        </div>
+
+        {localLoading ? (
+          <div className="spinner">
+            <CircularProgress />
+          </div>
+        ) : (
+          <List className="todo-list">
+            {todoList.map((todo) => {
+              return (
+                <ListItem button key={todo._id} className="list-item">
+                  <TodoItem
+                    todo={todo}
+                    isComplete={isComplete}
+                    setTodoList={setTodoList}
+                  />
+                </ListItem>
+              );
+            })}
+          </List>
+        )}
       </div>
-      <div className="title">
-        <h1>{isComplete ? "Completed Todos List" : "Todo List"}</h1>
+      <div className="add-btn">
+        <Tooltip title="Add Todo" placement="top">
+          <Fab
+            color="primary"
+            onClick={() => history.push("/new-todo")}
+            className={classes.otherButtons}
+          >
+            <AddIcon fontSize="large" />
+          </Fab>
+        </Tooltip>
       </div>
-      {todoList.length > 0 && (
-        <List component="nav" aria-label="contacts">
-          {todoList.map((todo) => {
-            return (
-              <ListItem button key={todo._id}>
-                <TodoItem todo={todo} isComplete={isComplete} />
-              </ListItem>
-            );
-          })}
-        </List>
-      )}
-    </div>
+    </>
   );
 };
 

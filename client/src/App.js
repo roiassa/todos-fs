@@ -1,12 +1,17 @@
 import React from "react";
-import HomePage from "./pages/HomePage/HomePage";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import NewTodoPage from "./pages/NewTodoPage";
 import "./styles/dist/App.css";
 
 function App() {
   return (
-    <div className="App">
-      <HomePage />
-    </div>
+    <Router>
+      <div className="App">
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/new-todo" component={NewTodoPage} />
+      </div>
+    </Router>
   );
 }
 

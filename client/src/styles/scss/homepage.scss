@@ -1,7 +1,8 @@
 .home-page {
-  width: 100%;
-  height: 100%;
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 969px;
   justify-content: center;
   align-items: center;
 }
