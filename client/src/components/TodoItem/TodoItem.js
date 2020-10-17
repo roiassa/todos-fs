@@ -40,9 +40,9 @@ const TodoItem = ({ todo, isComplete, setTodoList }) => {
         </div>
       ) : (
         <div className="todo-item-container" complete={isComplete}>
-          <>
+          <div className="todo-item-title">
             <span className="todo-title">{todo.title}</span>
-          </>
+          </div>
           <div className="todo-item-btns">
             <Tooltip title={isComplete ? "Undo" : "Complete"} placement="top">
               <Fab

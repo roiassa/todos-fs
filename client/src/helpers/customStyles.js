@@ -4,6 +4,9 @@ const styles = {
   fabBG: "white",
   topButtonsBG: "#70a0ad",
   selectedBtnBGColor: "#6182a2",
+  selectedBtnBorderBottom: "3px solid #7bb1b1 !important",
+  selectedBtnBorderRadius: "0px 0px 10px 10px !important",
+  selectedBtnBorderRight: "none !important",
 };
 
 export function customStyles() {
@@ -22,9 +25,9 @@ export function customStyles() {
     },
     selectedButtons: {
       backgroundColor: styles.selectedBtnBGColor,
-      borderBottom: "3px solid #7bb1b1 !important",
-      borderRadius: "0px 0px 10px 10px !important",
-      borderRight: "none !important",
+      borderBottom: styles.selectedBtnBorderBottom,
+      borderRadius: styles.selectedBtnBorderRadius,
+      borderRight: styles.selectedBtnBorderRight,
     },
   };
 }
